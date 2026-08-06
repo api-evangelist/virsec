@@ -1,0 +1,111 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.virsec.com/docs/cpm-apis
+docs:
+- https://docs.virsec.com/docs/probe-maintenance
+- https://docs.virsec.com/docs/cpm-apis
+- https://docs.virsec.com/docs/vrule-engine-troubleshooting
+- https://docs.virsec.com/docs/optimization
+name: vsp-cli
+description: 'vsp-cli is Virsec''s first-party command line interface to a VSP Probe
+  instance. The documentation states that query or modification of VSP configuration
+  or services is only possible through vsp-cli, making it the primary local control
+  plane for a protected workload. It is also remotely invokable: the Centralized Probe
+  Management API exposes POST /rms/vspcli, which executes an arbitrary vsp-cli
+  argument vector against a set of probes.'
+distribution:
+  model: bundled
+  note: vsp-cli ships with the VSP Probe installable; it is not published to any public
+    package registry. Installables are distributed from a Virsec Artifactory that
+    requires contacting Virsec for access.
+  artifactory: https://artifacts.virsec.work/ui/
+  platforms:
+  - Linux
+  - Windows
+privileges:
+  linux: root
+  windows: administrator
+  note: When password protection is not enabled, any user with admin/root privileges
+    can modify parameters. A base64-encoded password is accepted where vsp-cli is
+    password protected, including on the remote CPM invocations.
+help:
+  command: vsp-cli -h
+  subcommand_help: vsp-cli <subcommand> -h
+  note: Every subcommand carries its own help menu.
+commands:
+- group: inspect
+  commands:
+  - command: vsp-cli list
+    description: Lists the AE (vRule Engine) process after application provisioning
+      completes successfully.
+    source: https://docs.virsec.com/docs/vrule-engine-troubleshooting
+- group: configuration
+  commands:
+  - command: vsp-cli config <module> edit <parameter> <value>
+    description: Edits a VSP module configuration parameter on the probe.
+    examples:
+    - command: vsp-cli config ae edit logLevel debug
+      description: Enable debug-level vRule state logging for the vRule Engine.
+    - command: vsp-cli config vsp-manager edit usageCheckRate
+      description: Change the Usage Sampling Time — the interval between usage checks.
+- group: services
+  commands:
+  - command: vsp-cli start <module>
+    description: Start a VSP module (example given in the CPM API reference is
+      `vsp-cli start ae`).
+  - command: vsp-cli stop <module>
+    description: Stop a VSP module. Also reachable remotely via POST /rms/service with
+      action start|stop and serviceId vsp.
+- group: backup and restore
+  commands:
+  - command: vsp-cli backup
+    description: Back up probe configuration, data and log information before an
+      upgrade. Default destination /tmp/vsp_backup (Linux),
+      C:\ProgramData\vsp_backup (Windows).
+  - command: vsp-cli backup -b <backup_destination>
+    description: Back up to an alternate location.
+  - command: vsp-cli restore
+    description: Restore from an existing backup after a probe upgrade.
+  - command: vsp-cli restore -r <restore_source>
+    description: Restore from an alternate backup location.
+modules:
+  description: Module identifiers accepted by vsp-cli and by the CPM log-level API.
+  values:
+  - id: ae
+    name: vRule Engine
+  - id: fde
+    name: Framework Discovery Engine
+  - id: fsm
+    name: File System Monitoring
+  - id: hmm
+    name: HMM
+  - id: rmp
+    name: Memory Exploit Protection
+  - id: vipcs
+    name: vIPC Server
+  - id: vma
+    name: vsp-memory-assist
+  - id: aep
+    name: vRule Proxy
+  - id: weba
+    name: web-assist
+  - id: vmgr
+    name: VSP Manager
+  - id: all
+    name: All probe modules
+remote_execution:
+  api: POST /rms/vspcli
+  body:
+    arguments: array of vsp-cli argument tokens, e.g. ["config","ae","edit","logLevel","debug"]
+    password: base64-encoded password (when vsp-cli is password protected)
+    probeSet: array of probe UUIDs
+  available_from: VSP 2.11
+  source: https://docs.virsec.com/docs/cpm-apis
+x-evidence:
+  fetched: '2026-08-05'
+  live_docs_host: https://docs.virsec.com/
+  live_docs_status: tls-handshake-failure
+  read_via: Internet Archive captures of https://docs.virsec.com/docs/probe-maintenance
+    (2024-12-14), https://docs.virsec.com/docs/cpm-apis (2024-07-15) and
+    https://docs.virsec.com/2.10/troubleshooting/vsp-cli_usage.htm (2023-09-28), all
+    HTTP 200

@@ -1,0 +1,16 @@
+# Virsec
+
+> Virsec is a cybersecurity company that provides Zero Trust Runtime Defense for server workloads, stopping ransomware, zero-day, and unknown attacks in milliseconds through autonomous application control.
+
+## Pages
+
+- [Home](/): Autonomous application control for cloud and legacy workloads in the age of Mythos AI.
+- [Platform](/platform): The Virsec Security Platform — deny-by-default, allow-on-trust protection across host, memory, and web workloads.
+- [Runtime Protection](/runtime-protection): How VSP stops ransomware and zero-day threats at runtime without patching.
+- [Company](/company): About Virsec, leadership experience, investors, and awards.
+- [Contact](/contact): Book a demo or reach the Virsec team in San Jose, CA.
+- [Privacy Policy](/privacy): How Virsec collects, uses, protects, and shares personal information.
+
+## Optional
+
+- [Ottoguard AI](https://ottoguard.ai): Virsec's AI-driven security assistant.

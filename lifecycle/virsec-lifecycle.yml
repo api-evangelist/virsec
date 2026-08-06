@@ -1,0 +1,104 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.virsec.com/docs/cpm-apis
+description: Versioning, deprecation and support posture for the Virsec Security
+  Platform (VSP) API surface. VSP is customer-deployed software rather than a hosted
+  multi-tenant API, so the API lifecycle is bound to the product release train, not to
+  a URI or header version.
+versioning:
+  scheme: product-release
+  style: semantic product versions (major.minor.patch, with LA/GA and -Pn patch
+    qualifiers) applied to the platform as a whole
+  current: 3.1.1-P3
+  current_release_date: '2025-12-08'
+  api_version_in_url: false
+  api_version_header: false
+  docs: https://docs.virsec.com/docs/release-notes-310
+  note: The API reference gates each operation on the product release that introduced
+    it rather than versioning the endpoint path. Callers must reconcile the CMS and
+    Probe versions in their estate against the operation they intend to call.
+capability_gates:
+- version: 2.9 and above
+  applies_to: CPM API baseline (probe inventory, log/statistics/data collection, log
+    level modification, download, command history) — compatible across CMS and Probes
+- version: 2.11 and above
+  applies_to: Install Probe, Upgrade Probe, Uninstall Probe, Install Script, vsp-cli
+    Command
+- version: 3.0.0 and above
+  applies_to: Migrate Probe (on-prem to SaaS CMS), CPM Self Upgrade, Service Command
+    (start/stop VSP services), Global Allowlist APIs; CMS also becomes available as a
+    SaaS instance
+- version: 3.1.0 and above
+  applies_to: Trust Score / TrustSight, Closed Loop ACP, MEP Configuration Utility
+deprecation:
+  policy_url: https://docs.virsec.com/docs/cpm-apis
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  style: inline in-reference annotation — operations are marked "[Deprecated from VSP
+    <version> onwards]" in the API reference table, with the replacement endpoint
+    documented alongside.
+  note: There is no separate deprecation-policy page, no advance-notice window, and no
+    RFC 8594 Sunset/Deprecation header support. Deprecation is announced in the
+    reference and in release notes only.
+deprecated_operations:
+- operation: GET /rms/fetch/log/all
+  deprecated_from: VSP 2.11
+  replacement: GET /rms/fetch/log/{probeid} or POST /rms/fetch/log with a probes[] body
+  source: https://docs.virsec.com/docs/cpm-apis
+- operation: GET /rms/fetch/stats/all
+  deprecated_from: VSP 2.11
+  replacement: GET /rms/fetch/stats/{probeid} or POST /rms/fetch/stats with a probes[]
+    body
+  source: https://docs.virsec.com/docs/cpm-apis
+- operation: GET /rms/fetch/data/all
+  deprecated_from: VSP 2.11
+  replacement: GET /rms/fetch/data/{probeid} or POST /rms/fetch/data with a probes[]
+    body
+  source: https://docs.virsec.com/docs/cpm-apis
+compatibility:
+  description: Virsec publishes a per-release Compatibility Guide covering supported
+    operating systems, application servers and runtimes for each protection module.
+  guides:
+  - version: '3.1.x'
+    url: https://docs.virsec.com/docs/compatibility-guide-31x
+  - version: '3.0.x'
+    url: https://docs.virsec.com/docs/compatibility-guide-30x
+  - version: '2.11.x'
+    url: https://docs.virsec.com/docs/compatibility-guide-211x
+  - version: '2.9'
+    url: https://docs.virsec.com/docs/cg-version-29
+  - version: '2.8'
+    url: https://docs.virsec.com/docs/cg-version-28
+  - version: '2.7'
+    url: https://docs.virsec.com/docs/cg-version-27
+upgrade:
+  docs: https://docs.virsec.com/docs/upgrade-scenarios
+  migration_2x_to_3x: https://docs.virsec.com/docs/from-2x
+  note: CMS migration from 2.x on-prem to 3.x SaaS requires a matching probe upgrade;
+    the CPM Migrate Probe API exists specifically for this path.
+status_page: null
+status_page_note: No public status page was found. VSP CMS is customer-deployed (or a
+  Virsec-managed SaaS instance under a customer contract), so availability is reported
+  through support rather than a public status host. status.virsec.com does not resolve.
+sla:
+  url: null
+  published: false
+support:
+  docs: https://docs.virsec.com/docs/download-and-support
+  email: support@virsec.com
+  phone: 1-877-213-3558
+  artifact_distribution: https://artifacts.virsec.work/ui/
+  note: Access to the Artifactory that hosts installables requires contacting the
+    Virsec team.
+x-evidence:
+  fetched: '2026-08-05'
+  live_docs_host: https://docs.virsec.com/
+  live_docs_status: tls-handshake-failure
+  probed:
+  - url: https://status.virsec.com/
+    status: dns-nxdomain
+  read_via: Internet Archive captures of https://docs.virsec.com/docs/cpm-apis
+    (2024-07-15), /docs/release-notes-310 (2024-11-14), /docs/release-notes-300-ga
+    (2024-05-24), /docs/release-notes-211 (2023-12-01) and
+    /docs/patch-311-p3-ga-v2-1 (2026-01-23), all HTTP 200

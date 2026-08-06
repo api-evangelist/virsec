@@ -1,23 +1,132 @@
 aid: virsec
 name: Virsec
-description: 'Virsec is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Virsec Systems is a San Jose, California cybersecurity company that builds
+  the Virsec Security Platform (VSP), a deny-by-default, allow-on-trust zero trust runtime
+  defense for cloud and legacy server workloads. VSP combines host protection, memory
+  exploit protection and web protection with a Centralized Management Server (CMS) and
+  distributed Probes, stopping ransomware, remote code execution, living-off-the-land
+  and zero-day attacks at runtime without patching. The platform is customer-deployed
+  (on-prem VM, EC2/Azure/GCP, Kubernetes/Helm or SaaS CMS) and exposes a customer-facing
+  REST surface: a CMS API reference served from the CMS console under Help > API
+  Documentation, the Centralized Probe Management (CPM) API under /rms for probe
+  install, upgrade, migration, log/stat/data collection and vsp-cli execution, and
+  configurable outbound webhooks that push detected incidents into existing SIEM,
+  ITSM and ticketing systems (QRadar, Splunk, Syslog, Zendesk).'
+image: https://virsec.com/__l5e/assets-v1/f87abfa8-cf1d-4877-98d4-aecff7f5f2c3/virsec-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/virsec/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment
 specificationVersion: '0.20'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
 - Company
-apis: []
+- Security
+- Cybersecurity
+- Application Security
+- Workload Protection
+- Runtime Application Self-Protection
+- Zero Trust
+- Endpoint Security
+- Memory Protection
+- Ransomware
+- Vulnerability Management
+- On-Premise
+apis:
+- aid: virsec-cms-api
+  name: Virsec Security Platform CMS API
+  description: 'The Virsec Security Platform Centralized Management Server (CMS) exposes
+    a RESTful API for procuring information from CMS. From VSP 3.0.0 and above, the
+    available APIs are listed by category in the CMS console under Help > API
+    Documentation, where each API lists its base URL and required parameters and can be
+    executed interactively; the bearer token used is the OAuth token obtained from
+    Access Management. The CMS is customer-deployed, so the base URL is the customer''s
+    own CMS host rather than a shared multi-tenant endpoint.'
+  humanURL: https://docs.virsec.com/docs/available-apis
+  baseURL: https://{cms_host}
+  tags:
+  - Security
+  - Workload Protection
+  - Management
+  properties:
+  - type: Documentation
+    url: https://docs.virsec.com/docs/available-apis
+  - type: APIReference
+    url: https://docs.virsec.com/docs/available-apis
+  - type: Authentication
+    url: authentication/virsec-authentication.yml
+- aid: virsec-cpm-api
+  name: Virsec Centralized Probe Management (CPM) API
+  description: 'The Centralized Probe Management (CPM) API simplifies upgrade and
+    troubleshooting of VSP Probes deployed across application platforms. Served from
+    the customer''s CMS host under /rms, it covers probe inventory, log/statistics/data
+    collection, log-level modification per module, file download, command history,
+    probe install/upgrade/uninstall/migrate, CPM self-upgrade, script installation,
+    remote vsp-cli execution and VSP service start/stop. Requests use HTTP Basic
+    authentication with Super Admin credentials; the API is compatible with CMS and
+    Probes from VSP 2.9 and above, with install/upgrade/uninstall/script/vsp-cli
+    operations added in 2.11 and migrate/self-upgrade/service in 3.0.0.'
+  humanURL: https://docs.virsec.com/docs/cpm-apis
+  baseURL: https://{cms_host}/rms
+  tags:
+  - Security
+  - Workload Protection
+  - Agent Management
+  properties:
+  - type: Documentation
+    url: https://docs.virsec.com/docs/cpm-apis
+  - type: APIReference
+    url: https://docs.virsec.com/docs/cpm-apis
+  - type: ErrorCatalog
+    url: errors/virsec-error-codes.yml
+  - type: Authentication
+    url: authentication/virsec-authentication.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/virsec-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/virsec_stock/
+  url: https://virsec.com
+- type: Documentation
+  url: https://docs.virsec.com/
+- type: APIReference
+  url: https://docs.virsec.com/docs/available-apis
+- type: GettingStarted
+  url: https://docs.virsec.com/docs/vsp-introduction
+- type: Support
+  url: https://docs.virsec.com/docs/download-and-support
+- type: PrivacyPolicy
+  url: https://virsec.com/privacy
+- type: LinkedIn
+  url: https://www.linkedin.com/company/virsec
+- type: Twitter
+  url: https://twitter.com/Virsec
+- type: LLMsTxt
+  url: llms/virsec-llms.txt
+- type: Authentication
+  url: authentication/virsec-authentication.yml
+- type: Conventions
+  url: conventions/virsec-conventions.yml
+- type: ErrorCatalog
+  url: errors/virsec-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/virsec-lifecycle.yml
+- type: ChangeLog
+  url: changelog/virsec-changelog.yml
+- type: CLI
+  url: cli/virsec-cli.yml
+- type: Webhooks
+  url: asyncapi/virsec-cms-webhooks.yml
+- type: Conformance
+  url: conformance/virsec-conformance.yml
+x-enrichment:
+  date: '2026-08-05'
+  status: enriched
+  artifacts_added: 10
+  pass: local-v1

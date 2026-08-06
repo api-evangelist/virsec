@@ -1,0 +1,74 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.virsec.com/docs/cpm-apis
+description: Cross-cutting standards posture for the Virsec Security Platform API and
+  event surface, read from the provider's published documentation. Virsec publishes no
+  OpenAPI, so nothing here is derived from a specification.
+standards:
+- id: openapi
+  conforms: false
+  evidence: No OpenAPI or Swagger document is published on any Virsec host. The API
+    reference is rendered inside the customer's own CMS console (Help > API
+    Documentation) with a Try-it-out console, and the public documentation site
+    describes the operations in prose and tables only.
+- id: asyncapi
+  conforms: false
+  evidence: No AsyncAPI document; the webhook payload body is authored by the
+    integrator rather than defined by the provider.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors return a vendor JSON envelope ({status, errorMessage|error,
+    apiCommand|api}), not application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: https://virsec.com/.well-known/security.txt returns 404.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: Deprecated operations are annotated in the reference ("[Deprecated from
+    VSP 2.11 onwards]") but no Sunset or Deprecation response header is documented.
+- id: http-basic-auth
+  conforms: true
+  evidence: 'CPM API documents Authorization: Basic <base64 encode of userid:password>.'
+- id: oauth2-bearer
+  conforms: partial
+  evidence: The in-console CMS API reference executes with the user's bearer token,
+    documented as an OAuth token obtained from Access Management. No public
+    authorization-server metadata, token endpoint, or scope reference is published, so
+    the OAuth surface cannot be independently verified.
+- id: saml-2.0
+  conforms: true
+  evidence: VSP CMS supports SAML SSO for console identity —
+    https://docs.virsec.com/docs/saml
+- id: ldap
+  conforms: true
+  evidence: VSP CMS supports LDAP directory integration —
+    https://docs.virsec.com/docs/ldap
+- id: cef-common-event-format
+  conforms: true
+  evidence: 'Syslog forwarding emits ArcSight CEF (CEF: 1) records with a documented
+    field layout, severity mapping and per-event message code —
+    https://docs.virsec.com/docs/syslog'
+- id: dod-zero-trust-reference-architecture
+  conforms: claimed
+  evidence: Virsec claims coverage of all seven DoD Zero Trust pillars on
+    https://virsec.com/ ("Aligned to the DoD Zero Trust pillars", "Coverage 7 / 7").
+    This is a vendor marketing claim, not an audited certification, and no assessment
+    document is published.
+compliance_program:
+  published: false
+  note: A SOC 2 badge image (soc2-badge.webp) is preloaded by the Virsec homepage, but
+    no trust center, compliance page, certification list, or report-request flow was
+    found on any Virsec host. trust.virsec.com and security.virsec.com do not resolve
+    and https://virsec.com/security, /trust and /compliance all return 404, so no
+    Compliance pointer is asserted for this provider.
+  probed:
+  - url: https://virsec.com/security
+    status: 404
+  - url: https://virsec.com/trust
+    status: 404
+  - url: https://virsec.com/__l5e/assets-v1/a881d192-5373-41a1-9637-91900842f0c4/soc2-badge.webp
+    status: 200
+x-evidence:
+  fetched: '2026-08-05'
+  live_docs_host: https://docs.virsec.com/
+  live_docs_status: tls-handshake-failure

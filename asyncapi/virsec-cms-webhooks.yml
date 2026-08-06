@@ -1,0 +1,127 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.virsec.com/docs/webhooks
+spec_type: none
+spec_note: Virsec publishes no AsyncAPI document and no machine-readable event schema.
+  This artifact captures the event/notification surface as the provider documents it.
+description: The Virsec Security Platform CMS emits detected incidents outbound to
+  customer-configured HTTP endpoints. The CMS is the event producer; the integrator
+  supplies the receiving REST API, the filter that selects which incidents fire it, and
+  the JSON body template. The same incident stream is also forwardable over CEF syslog.
+docs:
+- https://docs.virsec.com/docs/webhooks
+- https://docs.virsec.com/docs/syslog
+- https://docs.virsec.com/docs/qradar
+- https://docs.virsec.com/docs/splunk
+- https://docs.virsec.com/docs/zendesk
+webhooks:
+  direction: outbound
+  configured_in: CMS console — Administration > Webhooks
+  purpose: Receive notifications of VSP-detected incidents and trigger macro-protection
+    actions in an existing system.
+  configuration:
+  - name: Enable
+    description: On — the webhook is added and enabled to receive incident
+      notifications. Off — added but inactive.
+  - name: Name
+    description: Name of the webhook.
+  - name: Description
+    description: Short description of the webhook.
+  - name: Webhook URL
+    description: REST API URL to call. POST and GET methods are supported.
+  - name: Content Type
+    description: JSON is the only supported format.
+  - name: Incident Filter
+    description: All incidents, or a subset selected by Severity, Application, Host,
+      Category, Type or Action.
+  - name: Authentication
+    description: 'None, Basic (username and password), or API Key (token).'
+  - name: HTTP Headers
+    description: Arbitrary key/value header pairs; multiple pairs supported.
+  - name: Body
+    description: Caller-authored JSON body template, composed from the incident
+      parameters listed on the configuration page. There is no fixed provider-defined
+      payload schema — the payload shape is chosen by the integrator.
+  - name: Validate SSL/TLS Certificate
+    description: Enabled by default; documented as disabled where the receiving system
+      presents a self-signed certificate.
+  testing:
+    mechanism: A TEST action on the configuration form verifies the endpoint before the
+      webhook is saved.
+  delivery_observability:
+    page: Administration > Webhooks activity list
+    fields:
+    - Status (Success/Failure)
+    - Event ID
+    - Webhook Name
+    - Request URL
+    - Request Time
+    - Response Time
+    filters:
+    - Webhook Name
+    - Status
+    - Time Range
+    note: No documented retry policy, backoff, dead-letter queue, or signature/HMAC
+      verification of the outbound request. Authentication of the callback is whatever
+      the integrator configures (None / Basic / API Key).
+event_taxonomy:
+  severity:
+  - value: Threats
+  - value: Attacks
+  - value: Notifications
+  category:
+  - Web Attack
+  - Fileless Attack
+  - Authentication Failures
+  - File Integrity Failures
+  type: Vulnerability types (selectable per webhook)
+  action: Whether a protection action was triggered
+syslog:
+  format: CEF
+  docs: https://docs.virsec.com/docs/syslog
+  configured_in: CMS console — Administration > Configurations > Syslog Server Settings
+  general_log_format: TIMESTAMP|Virsec Security Platform|Virsec|<RELEASE VERSION>|<MESSAGE
+    SPECIFIC NUMBER>|<BRIEF EVENT DESCRIPTION>|<NOTIFICATION SEVERITY>|<DETAILED
+    INFORMATION>
+  attack_log_format: TIMESTAMP|Virsec Security Platform|Virsec|<RELEASE VERSION>|<MESSAGE
+    SPECIFIC NUMBER>|<BRIEF EVENT DESCRIPTION>|<SEVERITY>|<EVENT ID>|<DETAILED
+    INFORMATION>
+  notification_severity:
+    '8': Critical
+    '5': Warning
+    '2': Info
+  attack_severity:
+    '10': Attack
+    '8': Threat
+    '5': Notification
+  message_code: Each event type carries a unique message-specific number (a de facto
+    event-type registry published inside the syslog article).
+  event_id: 'Per-incident unique ID encoding attack type and report date, e.g.
+    VS-SQLI-070720-A00262.'
+  settings_test: TEST SETTINGS action validates the syslog server configuration.
+downstream_integrations:
+- name: IBM Security QRadar
+  mechanism: five webhook configurations, one per event type, pointed at the QRadar
+    instance URL with Authentication None
+  docs: https://docs.virsec.com/docs/qradar
+- name: Splunk
+  docs: https://docs.virsec.com/docs/splunk
+- name: Syslog server
+  docs: https://docs.virsec.com/docs/syslog
+- name: Zendesk
+  docs: https://docs.virsec.com/docs/zendesk
+- name: Email
+  docs: https://docs.virsec.com/docs/email-settings
+gaps:
+- No AsyncAPI document, JSON Schema, or published payload schema for the webhook body.
+- No request signing / HMAC verification documented for outbound calls.
+- No retry, backoff, or replay semantics documented.
+x-evidence:
+  fetched: '2026-08-05'
+  live_docs_host: https://docs.virsec.com/
+  live_docs_status: tls-handshake-failure
+  read_via: Internet Archive captures of the provider's own documentation —
+    https://docs.virsec.com/2.10/vsp_cms/webhooks.htm (2023-10-03),
+    https://docs.virsec.com/2.10/qradar_setup/webhook_configuration_on_vsp_cms.htm
+    (2023-09-24) and https://docs.virsec.com/docs/syslog (2024-12-14), all HTTP 200 —
+    corroborated by the live-indexed https://docs.virsec.com/docs/webhooks article.

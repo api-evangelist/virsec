@@ -1,0 +1,119 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.virsec.com/docs/release-notes-310
+docs: https://docs.virsec.com/docs/release-notes-310
+description: Dated release notes for the Virsec Security Platform. Virsec publishes a
+  per-release notes article plus a per-patch article inside the product documentation;
+  there is no single reverse-chronological changelog feed and no RSS. Recent window
+  only — the documentation is the source of truth.
+scheme: semantic product versions with LA (Limited Availability) / GA (General
+  Availability) and -Pn patch qualifiers
+current_version: 3.1.1-P3
+current_release_date: '2025-12-08'
+entries:
+- version: 3.1.1-P3
+  date: '2025-12-08'
+  channel: GA
+  url: https://docs.virsec.com/docs/patch-311-p3-ga-v2-1
+  breaking: false
+  summary: Targeted priority patch. Virsec recommends customers on 3.1.1-P2 remain on
+    that version unless they need these specific fixes.
+  highlights:
+  - Per-host-profile control of Closed Loop ACP (CLACP), so autonomous protection can
+    be enabled selectively per host profile.
+  - Improved LOLBIN command-line pattern database for better regex detection accuracy.
+  - Linux kernel driver now reads a configuration file to exclude specific protected
+    processes from injection, improving compatibility with third-party EDR tools.
+  - Fixed File System Reconciliation (FSR) scans on Linux U22 producing empty package
+    list entries.
+  - Extended Windows package scanning to cover additional operating-system packages.
+- version: 3.1.1-P2
+  date: null
+  channel: LA
+  url: https://docs.virsec.com/docs/patch-311-p2-la
+  breaking: false
+  summary: Limited-availability patch on the 3.1.1 train. Release-note detail not
+    captured in this pass.
+- version: 3.1.1-P1
+  date: null
+  channel: patch
+  url: https://docs.virsec.com/docs/patch-311-p1
+  breaking: false
+- version: 3.1.1
+  date: null
+  channel: patch
+  url: https://docs.virsec.com/docs/patch-311
+  breaking: false
+- version: 3.1.0
+  date: '2024-09-03'
+  channel: GA
+  url: https://docs.virsec.com/docs/release-notes-310
+  breaking: false
+  summary: Introduces Trust Blade Engines and the Trust Score, plus the TrustSight
+    insight surface and Closed Loop ACP.
+  highlights:
+  - 'Trust Score — a 1..100 application trust metric computed as a multiplier of
+    Provenance, Integrity and Authorization across packaged and non-packaged code on a
+    workload.'
+  - 'TrustSight widgets: Topology (workload map, with manual CMDB ingest), System
+    Integrity, Vulnerability Compensation, and Know Your Software.'
+  - Closed Loop ACP — benign LOLBins are auto-added as ACP rules and their incidents
+    auto-acknowledged, reducing false positives; BUA (Block Unless Allowlisted) rules
+    applied to all platform LOLBins.
+  - MEP Configuration Utility — audit utility to run before enabling Memory Exploit
+    Protection where an EDR or other hooking agent is active on the workload.
+- version: 3.0.0
+  date: '2024-04-12'
+  channel: GA
+  url: https://docs.virsec.com/docs/release-notes-300-ga
+  breaking: false
+  api_relevant: true
+  summary: CMS becomes available as a Virsec-managed SaaS instance, and Global
+    Allowlists become API-addressable.
+  highlights:
+  - 'API: Global Allowlists can now be defined through APIs, allowlisting executables
+    across profiles.'
+  - CMS as a SaaS instance — removes the on-prem infrastructure requirement;
+    installation, upgrade and migration handled by the Virsec team. A SaaS CMS instance
+    supports 1500 associated probes.
+  - Migrating CMS from 2.x on-prem to 3.x SaaS requires probes to be upgraded to 3.x,
+    deployable with or without a proxy server.
+  - Host and Buffer Exploit Protection support for RHEL 6.x (64-bit) virtual machines.
+  - Granular custom-condition exceptions for Web Protection incidents.
+  - Host Protection uses a kernel cache for executables to optimize detection and
+    protection response time.
+- version: '2.11'
+  date: '2023-10-31'
+  channel: LA
+  url: https://docs.virsec.com/docs/release-notes-211
+  breaking: false
+  api_relevant: true
+  summary: The release that added the write side of the CPM API and deprecated the
+    fan-out log/stats/data endpoints.
+  highlights:
+  - 'API: Install Probe, Upgrade Probe, Uninstall Probe, Install Script and vsp-cli
+    Command APIs introduced.'
+  - 'API deprecation: GET /rms/fetch/log/all, /rms/fetch/stats/all and
+    /rms/fetch/data/all deprecated in favour of per-probe and probeSet forms.'
+  - Web Protection support for .NET 5, 6 and 7; Host and Memory Exploit Protection on
+    RHEL 9.
+  - Improved reflected and stored XSS detection algorithm.
+  - ACP enforcement extended to scripts and commands run from Windows interpreters
+    (PowerShell, command prompt).
+  - Incidents can be filtered to include/exclude specific hosts, and filters can be
+    saved.
+related:
+- name: CPM 1.0.0 release notes
+  url: https://docs.virsec.com/docs/release-notes-cpm-100
+- name: What's New feed
+  url: https://docs.virsec.com/docs/en/whats-newx
+x-evidence:
+  fetched: '2026-08-05'
+  live_docs_host: https://docs.virsec.com/
+  live_docs_status: tls-handshake-failure
+  read_via: Internet Archive captures of the provider's own release-notes articles
+    (patch-311-p3-ga-v2-1 2026-01-23, release-notes-310 2024-11-14,
+    release-notes-300-ga 2024-05-24, release-notes-211 2023-12-01), all HTTP 200
+  note: 'Entries with a null date are release-note articles confirmed present in the
+    documentation index but not opened in this pass; their dates are deliberately left
+    unset rather than guessed.'

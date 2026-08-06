@@ -1,0 +1,112 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.virsec.com/docs/cpm-apis
+docs:
+- https://docs.virsec.com/docs/available-apis
+- https://docs.virsec.com/docs/cpm-apis
+description: Cross-cutting request/response semantics for the Virsec Security Platform
+  REST surface, captured from the provider's own API reference. Virsec publishes no
+  OpenAPI, so every convention below is read from documented request/response examples
+  rather than derived from a specification.
+transport:
+  scheme: https
+  base_url_form: https://{cms_host}/rms
+  note: The CMS is customer-deployed, so the origin is the customer's own CMS host or
+    IP. The documented sample curl passes `--insecure`, indicating a self-signed
+    certificate is normal in a customer deployment.
+  content_type: application/json
+authentication:
+  style: http-basic
+  header: 'Authorization: Basic <base64 encode of userid:password>'
+  console_api: bearer token (OAuth token from CMS Access Management) for the in-console
+    API Documentation reference
+  see: authentication/virsec-authentication.yml
+idempotency:
+  supported: false
+  note: No idempotency key, request-deduplication window, or safe-retry contract is
+    documented. Several operations (install, upgrade, migrate, uninstall, self-upgrade,
+    service start/stop) are state-changing and asynchronous with no client-supplied
+    idempotency token, so a retried call re-issues the command.
+async_command_pattern:
+  description: Long-running operations do not block. A 200 response returns a command
+    UUID and a relative status URL that the client polls until each probe's status
+    becomes SUCCESS.
+  response_fields:
+  - status
+  - message
+  - url
+  - api
+  - version
+  status_url_form: /rms/status/cmd_{uuid}
+  download_url_form: /rms/download/{probeid}/{filename}
+  example:
+    status: SUCCESS
+    message: log-file fetch started, view status at url - /rms/status/cmd_489d40a5-85dd-4316-a06e-073e23223aca
+    url: /rms/status/cmd_489d40a5-85dd-4316-a06e-073e23223aca
+    api: Fetch log
+  polling_guidance: Documented as "access/refresh the URL after some time to ensure
+    that the collection is complete and the status changes to SUCCESS". No Retry-After
+    header or backoff guidance is published.
+batching:
+  description: Most single-probe GET operations have a POST sibling that accepts a
+    `probeSet` array of probe UUIDs and applies one common parameter set to all of
+    them.
+  field: probeSet
+  caveat: Documented as — where parameter values differ per probe, separate API calls
+    must be made.
+pagination:
+  style: page-size parameters on the command-history endpoint only
+  endpoint: GET /rms/view/api
+  params:
+  - name: from
+    description: Integer n — return API requests submitted in the past n hours. If
+      absent or invalid, all submitted requests are returned.
+  - name: cmdpage
+    description: Integer i — number of commands displayed per page.
+  - name: probepage
+    description: Integer j — number of probes displayed per page.
+  note: No cursor, no total count, no Link header. Collection endpoints such as
+    GET /rms/probes and GET /rms/download return unpaginated JSON arrays.
+filtering:
+  description: Log-level modification is scoped by path segment rather than by query
+    filter — /rms/enable/log/{probeid}/{moduleid}/{log-level}, with `all` accepted in
+    the module position.
+  optional_query:
+  - name: type
+    values:
+    - State log
+    - Message log
+    - Incident log
+    default: state logs
+  - name: password
+    description: Base64-encoded password, required only when vsp-cli is password
+      protected on the probe machine.
+identifiers:
+  probe: UUID (`identifier`), returned by GET /rms/probes
+  command: cmd_ prefixed UUID (`commandUuid`)
+  guidance: The documentation recommends verifying probes by hostname rather than IP
+    address, because the IP value "may not be accurate always".
+error_envelope:
+  see: errors/virsec-error-codes.yml
+  shape: '{status, errorMessage|error, apiCommand|api}'
+versioning:
+  see: lifecycle/virsec-lifecycle.yml
+  style: Capability gating by product version rather than by URI or header version —
+    the reference annotates each operation with the VSP release that introduced it
+    (2.9, 2.11, 3.0.0, 3.1.0).
+rate_limits:
+  documented: false
+  note: No rate limit, quota, or 429 behaviour is published. The API is single-tenant
+    and served from the customer's own CMS.
+request_tracing:
+  correlation_id: commandUuid (returned by the API, not supplied by the client)
+  request_id_header: none documented
+event_surface:
+  see: asyncapi/virsec-cms-webhooks.yml
+x-evidence:
+  fetched: '2026-08-05'
+  live_docs_host: https://docs.virsec.com/
+  live_docs_status: tls-handshake-failure
+  read_via: Internet Archive captures of https://docs.virsec.com/docs/cpm-apis
+    (2024-07-15, HTTP 200) and https://docs.virsec.com/docs/available-apis
+    (2024-04-24, HTTP 200)

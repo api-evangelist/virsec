@@ -1,0 +1,71 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.virsec.com/docs/cpm-apis
+docs:
+- https://docs.virsec.com/docs/available-apis
+- https://docs.virsec.com/docs/cpm-apis
+- https://docs.virsec.com/docs/local-cms-users
+- https://docs.virsec.com/docs/cms-user-types
+- https://docs.virsec.com/docs/saml
+- https://docs.virsec.com/docs/ldap
+summary:
+  types:
+  - http
+  - oauth2
+  api_key_in: []
+  oauth2_flows: []
+  note: Derived from the provider's published API documentation, not from an OpenAPI
+    document — Virsec publishes no machine-readable specification.
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: 'HTTP Basic authentication carrying a base64 encoding of userid:password.
+    This is the documented scheme for the Centralized Probe Management (CPM) API, sent
+    as `Authorization: Basic <base64_encode_of_userid:password>` alongside
+    `Content-type: application/json`.'
+  applies_to:
+  - Virsec Centralized Probe Management (CPM) API
+  source: https://docs.virsec.com/docs/cpm-apis
+  constraints:
+  - Super Admin credentials must be used for the CPM APIs; other CMS user roles do not
+    have permission to call them.
+  - Applicable to local (Super Admin) users only.
+  - The documented sample curl uses `--insecure`, i.e. the CMS commonly presents a
+    self-signed certificate in a customer deployment.
+- name: oauthBearer
+  type: http
+  scheme: bearer
+  description: The CMS API reference (Help > API Documentation in the CMS console,
+    VSP 3.0.0 and above) executes requests with the user's bearer token, documented as
+    the OAuth token obtained from Access Management within CMS.
+  applies_to:
+  - Virsec Security Platform CMS API
+  source: https://docs.virsec.com/docs/available-apis
+  constraints:
+  - No public authorization-server metadata, token endpoint, or scope reference is
+    published; the token is issued inside the customer's own CMS deployment.
+console_identity:
+  description: Operator identity for the CMS console itself (not the API credential),
+    which governs which roles can obtain API credentials.
+  methods:
+  - name: Local CMS users
+    docs: https://docs.virsec.com/docs/local-cms-users
+  - name: SAML 2.0 single sign-on
+    docs: https://docs.virsec.com/docs/saml
+  - name: LDAP
+    docs: https://docs.virsec.com/docs/ldap
+  roles_docs: https://docs.virsec.com/docs/user-roles
+credential_issuance:
+  model: customer-deployed
+  description: There is no public sign-up or key-issuance surface. Credentials are
+    generated inside the customer's own CMS deployment; the vendor gates platform
+    downloads separately through an Artifactory that requires contacting Virsec.
+  artifactory: https://artifacts.virsec.work/ui/
+x-evidence:
+  fetched: '2026-08-05'
+  live_docs_host: https://docs.virsec.com/
+  live_docs_status: tls-handshake-failure
+  read_via: Internet Archive capture of the provider's own public documentation
+    (docs.virsec.com/docs/cpm-apis, captured 2024-07-15, HTTP 200) because the live
+    origin refused the TLS handshake from this run.

@@ -42,5 +42,34 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Virsec is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/virsec_stock/
+Virsec Systems is a San Jose, California cybersecurity company that builds the Virsec
+Security Platform (VSP) — a deny-by-default, allow-on-trust zero trust runtime defense
+for cloud and legacy server workloads, combining host protection, memory exploit
+protection and web protection across a Centralized Management Server (CMS) and
+distributed Probes.
+
+- Website: https://virsec.com
+- Documentation: https://docs.virsec.com/
+- Support: support@virsec.com · 1-877-213-3558
+
+## API surface
+
+VSP is customer-deployed software, not a hosted multi-tenant API, so the REST surface is
+served from the customer's own CMS host rather than a Virsec-operated origin.
+
+| Surface | Reference |
+|---|---|
+| CMS API (in-console reference, OAuth bearer) | https://docs.virsec.com/docs/available-apis |
+| Centralized Probe Management (CPM) API, `/rms`, HTTP Basic | https://docs.virsec.com/docs/cpm-apis |
+| Outbound incident webhooks + CEF syslog | https://docs.virsec.com/docs/webhooks |
+
+Virsec publishes **no OpenAPI, AsyncAPI, GraphQL SDL, Postman collection or client SDK**.
+It does publish an `llms.txt` at https://virsec.com/llms.txt, captured verbatim in
+`llms/`. The artifacts in this repo describe the documented surface; none of them is a
+specification authored on Virsec's behalf.
+
+> Note for a re-run: `docs.virsec.com` (Document360 behind Cloudflare) refused the TLS
+> handshake with a fatal `handshake_failure` (alert 40) for every client attempted on
+> 2026-08-05. The documentation is public and search-indexed; the artifacts here were
+> read from Internet Archive captures of Virsec's own public documentation, with the
+> exact capture URL and status recorded in each file's `x-evidence`.

@@ -1,0 +1,96 @@
+generated: '2026-08-05'
+method: searched
+source: https://docs.virsec.com/docs/cpm-apis
+format: vendor-json
+description: Error catalog for the Virsec Centralized Probe Management (CPM) API,
+  captured verbatim from the "Error Reponses" section of the provider's CPM API
+  reference. Virsec does not publish RFC 9457 problem+json; errors are returned as a
+  vendor JSON envelope.
+envelope:
+  content_type: application/json
+  fields:
+  - name: status
+    description: Machine-readable outcome token. `SUCCESS` on the happy path; an
+      uppercase error token on failure.
+  - name: errorMessage
+    description: Human-readable failure text. Some responses use `error` instead.
+  - name: error
+    description: Alternate human-readable failure text used by parameter-validation
+      responses.
+  - name: apiCommand
+    description: Echo of the command that was attempted (e.g. "change loglevel to
+      info , for module ae").
+  - name: api
+    description: Echo of the API that was invoked (e.g. "install probe").
+problems:
+- status: 400
+  code: INVALID_PROBEID
+  title: Probe ID is invalid
+  example:
+    status: INVALID_PROBEID
+    errorMessage: Invalid probeid
+    apiCommand: change loglevel to info , for module ae
+  remediation: Retrieve valid probe identifiers from GET /rms/probes.
+  source: https://docs.virsec.com/docs/cpm-apis
+- status: 400
+  code: INVALID_MODULE
+  title: Module ID is invalid
+  example:
+    status: INVALID_MODULE
+    errorMessage: Invalid module, allowed - (ae|fde|fsm|hmm|rmp|vipcs|vma|weba|vmgr|aep)
+    apiCommand: change loglevel to info , for module aem
+  remediation: Use one of the documented module IDs — ae (vRule Engine), fde (Framework
+    Discovery Engine), fsm (File System Monitoring), hmm, rmp (Memory Exploit
+    Protection), vipcs (vIPC Server), vma (vsp-memory-assist), weba (web-assist),
+    vmgr (VSP Manager), aep (vRule Proxy), or `all`.
+  source: https://docs.virsec.com/docs/cpm-apis
+- status: 400
+  code: INVALID_PARAMETER
+  title: Parameter value is invalid
+  example:
+    status: INVALID_PARAMETER
+    error: Given sku is invalid. possible values are - (web|host|mem)
+    api: install probe
+  remediation: Send only documented enum values (sku is web, host or mem).
+  source: https://docs.virsec.com/docs/cpm-apis
+- status: 401
+  code: UNAUTHORIZED
+  title: User is unauthorized and user authentication failed
+  remediation: 'Send an Authorization: Basic header carrying the base64 encoding of
+    userid:password for a CMS Super Admin local user; other roles are not permitted to
+    call the CPM APIs.'
+  source: https://docs.virsec.com/docs/cpm-apis
+- status: 404
+  code: PROBE_NOT_FOUND
+  title: Probe is not found
+  example:
+    status: PROBE_NOT_FOUND
+    errorMessage: Probe not found - 3c0fae9a-0075-4e8d-8d90-59ad94d0fb13
+    apiCommand: change loglevel to info , for module ae
+  remediation: The probe UUID is well-formed but not registered with this CMS. List
+    registered probes with GET /rms/probes.
+  source: https://docs.virsec.com/docs/cpm-apis
+documented_failure_conditions:
+- api: POST /rms/install/script
+  conditions:
+  - sourcePath is required; execution fails when it is omitted or when it names a
+    directory rather than a file on the LFR.
+  - destPath parent directories must already exist on the probe, otherwise execution
+    fails.
+  - When `user` does not exist on the probe, the script is still copied using the
+    account running cpm-client but the ownership change fails.
+  - When `userGroup` does not exist on the probe, the script is still copied but the
+    group change fails.
+  source: https://docs.virsec.com/docs/cpm-apis
+gaps:
+- No RFC 9457 (problem+json) media type is used.
+- No error-code registry is published for the CMS API itself; the "Available APIs"
+  page states that the in-console reference includes "a mapping of error codes to
+  their meaning", but that mapping is only rendered inside an authenticated CMS
+  deployment.
+x-evidence:
+  fetched: '2026-08-05'
+  live_docs_host: https://docs.virsec.com/
+  live_docs_status: tls-handshake-failure
+  read_via: Internet Archive capture of https://docs.virsec.com/docs/cpm-apis
+    (2024-07-15, HTTP 200)

@@ -1,0 +1,44 @@
+generated: '2026-08-05'
+method: probed
+source: live probes of the Virsec corporate host
+host: https://virsec.com
+documents:
+- path: /.well-known/security.txt
+  status: 404
+- path: /.well-known/openid-configuration
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  status: 404
+- path: /.well-known/api-catalog
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+- path: /.well-known/agent-card.json
+  status: 404
+- path: /.well-known/agent.json
+  status: 404
+- path: /llms.txt
+  status: 200
+  file: ../llms/virsec-llms.txt
+  note: RFC 9116 well-known set is absent, but Virsec does publish an llms.txt at the
+    site root.
+- path: /robots.txt
+  status: 200
+  note: 'User-agent: * / Allow: / with a sitemap pointer. No agent-specific rules.'
+- path: /sitemap.xml
+  status: 200
+  note: Six URLs only — the corporate site is a six-page marketing site; the product
+    documentation lives on a separate host (docs.virsec.com).
+notes:
+- The API host is not a shared Virsec-operated endpoint. The Virsec Security Platform
+  CMS is customer-deployed, so there is no public API origin on which a /.well-known/
+  surface could be probed.
+- docs.virsec.com could not be probed from this run — the origin terminates the TLS
+  handshake with a fatal handshake_failure (alert 40) for every client attempted
+  (LibreSSL curl, OpenSSL 3.6 python, node fetch). See x-evidence.
+x-evidence:
+  fetched: '2026-08-05'
+  probed_hosts:
+  - virsec.com
+  - docs.virsec.com
+  docs_host_status: tls-handshake-failure
