@@ -12,6 +12,17 @@ description: 'Virsec Systems is a San Jose, California cybersecurity company tha
   install, upgrade, migration, log/stat/data collection and vsp-cli execution, and
   configurable outbound webhooks that push detected incidents into existing SIEM,
   ITSM and ticketing systems (QRadar, Splunk, Syslog, Zendesk).'
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - none
+  generated: '2026-08-28'
+  method: derived
 image: https://virsec.com/__l5e/assets-v1/f87abfa8-cf1d-4877-98d4-aecff7f5f2c3/virsec-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/virsec/refs/heads/main/apis.yml
 x-type: company
