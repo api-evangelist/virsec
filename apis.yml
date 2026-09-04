@@ -23,6 +23,19 @@ deliveryModel:
   - none
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: low
+  source:
+  - authentication
+  - security
+  generated: '2026-09-02'
+  method: derived
 image: https://virsec.com/__l5e/assets-v1/f87abfa8-cf1d-4877-98d4-aecff7f5f2c3/virsec-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/virsec/refs/heads/main/apis.yml
 x-type: company
