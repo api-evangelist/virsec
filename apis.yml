@@ -1,17 +1,15 @@
 aid: virsec
 name: Virsec
-description: 'Virsec Systems is a San Jose, California cybersecurity company that builds
-  the Virsec Security Platform (VSP), a deny-by-default, allow-on-trust zero trust runtime
-  defense for cloud and legacy server workloads. VSP combines host protection, memory
-  exploit protection and web protection with a Centralized Management Server (CMS) and
-  distributed Probes, stopping ransomware, remote code execution, living-off-the-land
-  and zero-day attacks at runtime without patching. The platform is customer-deployed
-  (on-prem VM, EC2/Azure/GCP, Kubernetes/Helm or SaaS CMS) and exposes a customer-facing
-  REST surface: a CMS API reference served from the CMS console under Help > API
-  Documentation, the Centralized Probe Management (CPM) API under /rms for probe
-  install, upgrade, migration, log/stat/data collection and vsp-cli execution, and
-  configurable outbound webhooks that push detected incidents into existing SIEM,
-  ITSM and ticketing systems (QRadar, Splunk, Syslog, Zendesk).'
+description: 'Virsec Systems is a San Jose, California cybersecurity company that builds the Virsec Security
+  Platform (VSP), a deny-by-default, allow-on-trust zero trust runtime defense for cloud and legacy server
+  workloads. VSP combines host protection, memory exploit protection and web protection with a Centralized
+  Management Server (CMS) and distributed Probes, stopping ransomware, remote code execution, living-off-the-land
+  and zero-day attacks at runtime without patching. The platform is customer-deployed (on-prem VM, EC2/Azure/GCP,
+  Kubernetes/Helm or SaaS CMS) and exposes a customer-facing REST surface: a CMS API reference served
+  from the CMS console under Help > API Documentation, the Centralized Probe Management (CPM) API under
+  /rms for probe install, upgrade, migration, log/stat/data collection and vsp-cli execution, and configurable
+  outbound webhooks that push detected incidents into existing SIEM, ITSM and ticketing systems (QRadar,
+  Splunk, Syslog, Zendesk).'
 deliveryModel:
   model: unknown
   open_source: false
@@ -59,15 +57,14 @@ tags:
 - Vulnerability Management
 - On-Premise
 apis:
-- aid: virsec-cms-api
+- aid: virsec:virsec-cms-api
   name: Virsec Security Platform CMS API
-  description: 'The Virsec Security Platform Centralized Management Server (CMS) exposes
-    a RESTful API for procuring information from CMS. From VSP 3.0.0 and above, the
-    available APIs are listed by category in the CMS console under Help > API
-    Documentation, where each API lists its base URL and required parameters and can be
-    executed interactively; the bearer token used is the OAuth token obtained from
-    Access Management. The CMS is customer-deployed, so the base URL is the customer''s
-    own CMS host rather than a shared multi-tenant endpoint.'
+  description: The Virsec Security Platform Centralized Management Server (CMS) exposes a RESTful API
+    for procuring information from CMS. From VSP 3.0.0 and above, the available APIs are listed by category
+    in the CMS console under Help > API Documentation, where each API lists its base URL and required
+    parameters and can be executed interactively; the bearer token used is the OAuth token obtained from
+    Access Management. The CMS is customer-deployed, so the base URL is the customer's own CMS host rather
+    than a shared multi-tenant endpoint.
   humanURL: https://docs.virsec.com/docs/available-apis
   baseURL: https://{cms_host}
   tags:
@@ -81,17 +78,15 @@ apis:
     url: https://docs.virsec.com/docs/available-apis
   - type: Authentication
     url: authentication/virsec-authentication.yml
-- aid: virsec-cpm-api
+- aid: virsec:virsec-cpm-api
   name: Virsec Centralized Probe Management (CPM) API
-  description: 'The Centralized Probe Management (CPM) API simplifies upgrade and
-    troubleshooting of VSP Probes deployed across application platforms. Served from
-    the customer''s CMS host under /rms, it covers probe inventory, log/statistics/data
-    collection, log-level modification per module, file download, command history,
-    probe install/upgrade/uninstall/migrate, CPM self-upgrade, script installation,
-    remote vsp-cli execution and VSP service start/stop. Requests use HTTP Basic
-    authentication with Super Admin credentials; the API is compatible with CMS and
-    Probes from VSP 2.9 and above, with install/upgrade/uninstall/script/vsp-cli
-    operations added in 2.11 and migrate/self-upgrade/service in 3.0.0.'
+  description: The Centralized Probe Management (CPM) API simplifies upgrade and troubleshooting of VSP
+    Probes deployed across application platforms. Served from the customer's CMS host under /rms, it covers
+    probe inventory, log/statistics/data collection, log-level modification per module, file download,
+    command history, probe install/upgrade/uninstall/migrate, CPM self-upgrade, script installation, remote
+    vsp-cli execution and VSP service start/stop. Requests use HTTP Basic authentication with Super Admin
+    credentials; the API is compatible with CMS and Probes from VSP 2.9 and above, with install/upgrade/uninstall/script/vsp-cli
+    operations added in 2.11 and migrate/self-upgrade/service in 3.0.0.
   humanURL: https://docs.virsec.com/docs/cpm-apis
   baseURL: https://{cms_host}/rms
   tags:
