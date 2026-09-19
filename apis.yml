@@ -55,6 +55,19 @@ tags:
 - Memory Protection
 - Ransomware
 - Vulnerability Management
+- On-Premises
+tags_raw:
+- Company
+- Security
+- Cybersecurity
+- Application Security
+- Workload Protection
+- Runtime Application Self-Protection
+- Zero Trust
+- Endpoint Security
+- Memory Protection
+- Ransomware
+- Vulnerability Management
 - On-Premise
 apis:
 - aid: virsec:virsec-cms-api
